@@ -1,8 +1,15 @@
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+buildscript {
+	dependencies {
+		classpath("org.openapitools:openapi-generator-gradle-plugin:7.1.0")
+	}
+}
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.1'
 	id 'io.spring.dependency-management' version '1.1.4'
 	id 'org.asciidoctor.jvm.convert' version '3.3.2'
+	id "org.openapi.generator" version "7.1.0"
 }
 
 group = 'com.example'
@@ -34,8 +41,38 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+	// OPENAPI
+	implementation('io.swagger:swagger-annotations:1.6.11')
+	implementation('org.openapitools:jackson-databind-nullable:0.2.6')
+	implementation('org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0')
 }
 
+openApiGenerate {
+	generatorName = "spring"
+	inputSpec = "$rootDir/openapi/main.yaml".toString()
+	outputDir = layout.buildDirectory.file("generated/sources/openapi").get().asFile.path
+	apiPackage = "cm.domeni.demo.api"
+	modelPackage = "cm.domeni.demo.dto"
+	configOptions = [
+			dateLibrary         : "java8-localdatetime",
+			library             : "spring-boot",
+			interfaceOnly       : "true",
+			useTags             : "true",
+			skipDefaultInterface: "true",
+			useSpringBoot3      : "true",
+			openApiNullable     : "false"
+	]
+	typeMappings = [
+			time: "java.time.LocalTime",
+	]
+}
+
+sourceSets.main.java.srcDir layout.buildDirectory.file("generated/sources/openapi/src/main/java").get().asFile.path
+
+compileJava.dependsOn(
+		tasks.openApiGenerate
+)
 tasks.named('test') {
 	outputs.dir snippetsDir
 	useJUnitPlatform()
