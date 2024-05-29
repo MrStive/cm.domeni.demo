@@ -11,6 +11,9 @@ plugins {
 	id 'org.asciidoctor.jvm.convert' version '3.3.2'
 	id "org.openapi.generator" version "7.1.0"
 }
+ext {
+	set('mapstructVersion', "1.5.5.Final")
+}
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -37,10 +40,20 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	implementation('org.eclipse.persistence:eclipselink:2.7.7')
+
+	// Mapstruct
+	implementation("org.mapstruct:mapstruct:${mapstructVersion}")
+	annotationProcessor("org.mapstruct:mapstruct-processor:${mapstructVersion}")
+	testAnnotationProcessor("org.mapstruct:mapstruct-processor:${mapstructVersion}")
+	//postgres
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.postgresql:postgresql'
 
 	// OPENAPI
 	implementation('io.swagger:swagger-annotations:1.6.11')
