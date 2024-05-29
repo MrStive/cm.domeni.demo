@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/cm_domeni_demo"
+    username: "postgres"
+    password: "domenisteve@gmail.com"
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true

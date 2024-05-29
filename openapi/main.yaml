@@ -33,7 +33,26 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/DemoDTO'
-
+  /user:
+    post:
+      tags:
+        - User
+      summary: create user
+      description: create user
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/UserDTO'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
 components:
   schemas:
     DemoDTO:
@@ -43,5 +62,17 @@ components:
           type: string
           format: uuid
         name:
+          type: string
+    UserDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        userName:
+          type: string
+        firstName:
+          type: string
+        lastName:
           type: string
 
