@@ -1,0 +1,49 @@
+spring:
+  config:
+    import: "optional:configserver:"
+  datasource:
+    url: jdbc:tc:postgresql:14.5:///maliya_loyalty_e2e
+    driver-class-name:
+  liquibase:
+    contexts: e2e
+  jpa:
+    show-sql: true
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers:
+    kubernetes:
+      discovery:
+        enabled: false
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
+lao:
+  tenant:
+    uri: "http://localhost:${wiremock.server.port}/tenant"
+  reset-password-url: "https://staging.maleya.cm/forgot-password"
+  service:
+    uum:
+      uri: "http://localhost:${wiremock.server.port}/uum"
+    pricing:
+      uri: "http://localhost:${wiremock.server.port}/pricing"
+    catalog:
+      uri: "http://localhost:${wiremock.server.port}/catalog"
+    saa:
+      uri: "http://localhost:${wiremock.server.port}/saa"
+    sales:
+      uri: "http://localhost:${wiremock.server.port}/sales"
+    otp:
+      uri: "http://localhost:${wiremock.server.port}/otp"
+    archiving:
+      uri: "http://localhost:${wiremock.server.port}/archiving"
+  keycloak:
+    enabled: false
+
+  cache:
+    hazelcast:
+      cluster:
+        name: dev

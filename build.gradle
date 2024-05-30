@@ -34,6 +34,8 @@ repositories {
 
 ext {
 	set('snippetsDir', file("build/generated-snippets"))
+	set('cucumberVersion', "7.12.1")
+	set('junitPlatformSuite', "1.9.0")
 }
 
 dependencies {
@@ -55,10 +57,20 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.postgresql:postgresql'
 
+
 	// OPENAPI
 	implementation('io.swagger:swagger-annotations:1.6.11')
 	implementation('org.openapitools:jackson-databind-nullable:0.2.6')
 	implementation('org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0')
+
+	// Cucumber
+	testImplementation("org.junit.platform:junit-platform-suite:${junitPlatformSuite}")
+	testImplementation("org.junit.platform:junit-platform-suite-api:${junitPlatformSuite}")
+	testImplementation("io.cucumber:cucumber-core:${cucumberVersion}")
+	testImplementation("io.cucumber:cucumber-java:${cucumberVersion}")
+	testImplementation("io.cucumber:cucumber-java8:${cucumberVersion}")
+	testImplementation("io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}")
+	testImplementation("io.cucumber:cucumber-spring:${cucumberVersion}")
 }
 
 openApiGenerate {
@@ -78,6 +90,19 @@ openApiGenerate {
 	]
 	typeMappings = [
 			time: "java.time.LocalTime",
+	]
+}
+
+tasks.register('e2eTest', JavaExec) {
+	dependsOn assemble, testClasses
+	mainClass = "io.cucumber.core.cli.Main"
+	classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+	jvmArgs = ["--enable-preview"]
+	args = [
+			'--plugin', 'html:build/cucumber-reports/html/index.html',
+			'--plugin', 'json:build/cucumber-reports/json/cucumber.json',
+			'--plugin', 'junit:build/cucumber-reports/json/cucumber.xml',
+			'--glue', 'cm.domeni.e2e', 'src/test/resources/cm/domeni/e2e/features/'
 	]
 }
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+<changeSet id="demo-3" author="domeni.ngameni">
+    <createTable tableName="t_user">
+        <column name="c_id" type="varchar(50)">
+            <constraints primaryKey="true" foreignKeyName="fk_user"/>
+        </column>
+        <column name="c_first_name" type="varchar(255)"/>
+        <column name="c_last_name" type="varchar(255)"/>
+        <column name="c_user_name" type="varchar(255)">
+            <constraints nullable="false" unique="true"/>
+        </column>
+        <column name="c_deleted" type="boolean" defaultValue="false"/>
+        <column name="c_version" type="bigint" defaultValue="1"/>
+    </createTable>
+</changeSet>
+</databaseChangeLog>
