@@ -1,0 +1,13 @@
+spring:
+  config:
+    import: "optional:configserver:"
+  datasource:
+    url: jdbc:tc:postgresql:14.5:///demo_e2e
+    driver-class-name:
+  liquibase:
+    contexts: e2e
+    eclipselink.logging.parameters: true
+logging:
+  level:
+    org.springframework.security: DEBUG
+    cm.lao: DEBUG
