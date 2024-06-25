@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class DemoBeans {
 
-    @Bean
-    public UserRepository userRepository(UserSpringRepository userSpringRepository) {
-      return   new DefaultUserRepository(userSpringRepository);
-    }
+  @Bean
+  public UserRepository userRepository(UserSpringRepository userSpringRepository) {
+    return new DefaultUserRepository(userSpringRepository);
+  }
 }

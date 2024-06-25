@@ -7,14 +7,11 @@ import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(
-        componentModel = "spring",
-        injectionStrategy = InjectionStrategy.CONSTRUCTOR
-)
+@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface UserMapper {
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "firstName", source = "firstName")
-    @Mapping(target = "lastName", source = "lastName")
-    @Mapping(target = "username", source = "userName")
-    User mapToUser(UserDTO value);
+  @BeanMapping(ignoreByDefault = true)
+  @Mapping(target = "firstName", source = "firstName")
+  @Mapping(target = "lastName", source = "lastName")
+  @Mapping(target = "username", source = "userName")
+  User mapToUser(UserDTO value);
 }
