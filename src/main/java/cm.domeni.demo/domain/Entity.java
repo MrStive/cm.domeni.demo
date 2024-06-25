@@ -3,13 +3,13 @@ package cm.domeni.demo.domain;
 import java.io.Serializable;
 
 public interface Entity<T extends Serializable> {
-    T getId();
+  T getId();
 
-    void setId(T id);
+  void setId(T id);
 
-    boolean isDeleted();
+  boolean isDeleted();
 
-    void markAsDeleted();
+  void markAsDeleted();
 
-    void markAsNotDeleted();
+  void markAsNotDeleted();
 }

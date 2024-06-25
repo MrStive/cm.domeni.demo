@@ -10,6 +10,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.4'
 	id 'org.asciidoctor.jvm.convert' version '3.3.2'
 	id "org.openapi.generator" version "7.1.0"
+	id 'com.diffplug.spotless' version '6.25.0' apply false
 }
 ext {
 	set('mapstructVersion', "1.5.5.Final")
@@ -17,6 +18,7 @@ ext {
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
+apply plugin: 'com.diffplug.spotless'
 
 java {
 	sourceCompatibility = '21'
@@ -68,16 +70,16 @@ openApiGenerate {
 	apiPackage = "cm.domeni.demo.api"
 	modelPackage = "cm.domeni.demo.dto"
 	configOptions = [
-			dateLibrary         : "java8-localdatetime",
-			library             : "spring-boot",
-			interfaceOnly       : "true",
-			useTags             : "true",
-			skipDefaultInterface: "true",
-			useSpringBoot3      : "true",
-			openApiNullable     : "false"
+		dateLibrary         : "java8-localdatetime",
+		library             : "spring-boot",
+		interfaceOnly       : "true",
+		useTags             : "true",
+		skipDefaultInterface: "true",
+		useSpringBoot3      : "true",
+		openApiNullable     : "false"
 	]
 	typeMappings = [
-			time: "java.time.LocalTime",
+		time: "java.time.LocalTime",
 	]
 }
 
@@ -85,7 +87,7 @@ sourceSets.main.java.srcDir layout.buildDirectory.file("generated/sources/openap
 
 compileJava.dependsOn(
 		tasks.openApiGenerate
-)
+		)
 tasks.named('test') {
 	outputs.dir snippetsDir
 	useJUnitPlatform()
@@ -94,4 +96,18 @@ tasks.named('test') {
 tasks.named('asciidoctor') {
 	inputs.dir snippetsDir
 	dependsOn test
+}
+
+spotless {
+	java {
+		googleJavaFormat('1.22.0')
+				.reflowLongStrings()
+				.formatJavadoc(true)
+				.reorderImports(true)
+				.groupArtifact('com.google.googlejavaformat:google-java-format')
+	}
+	groovyGradle {
+		target '*.gradle'
+		greclipse()
+	}
 }

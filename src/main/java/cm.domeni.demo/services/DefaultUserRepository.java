@@ -7,9 +7,10 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class DefaultUserRepository implements UserRepository {
-private final UserSpringRepository userSpringRepository;
-    @Override
-    public User save(User userData) {
-       return userSpringRepository.save(userData);
-    }
+  private final UserSpringRepository userSpringRepository;
+
+  @Override
+  public User save(User userData) {
+    return userSpringRepository.save(userData);
+  }
 }
