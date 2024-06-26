@@ -14,7 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 public class UserSteps implements En {
     UUID userid;
-    @Autowired
     private BaseHttpClient httpClient;
     @Autowired
     private JdbcTemplate jdbcTemplate;
