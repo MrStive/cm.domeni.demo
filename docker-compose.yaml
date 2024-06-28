@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:14
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: cm_domeni_demo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: domenisteve@gmail.com
+    ports:
+      - "5435:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+  app:
+    image: cm.domeni.demo/demo:v1
+    container_name: demo_app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/cm_domeni_demo
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: domenisteve@gmail.com
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8088:8080"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
